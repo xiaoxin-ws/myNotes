@@ -1,0 +1,93 @@
+第一次使用时遇到的坑，记录一下，详细信息看官网https://router.vuejs.org/zh/installation.html
+
+1.基本使用：
+安装：
+npm i vue-router --save
+或者（vue-cli3.0以上）
+vue add router === vue ui（导入项目，右上角添加router）
+
+使用：
+前者安装：
+src下面创建router文件夹：
+router下面创建index.js
+---------------------
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+
+import A from "../pages/A.vue";
+import B from "../pages/B.vue";
+
+Vue.use(VueRouter)
+const routes = [
+  { path: "/", component: A },
+  { path: "/b", component: B }
+  //{
+  //  path: '/',
+  //  name: 'Home',
+  //  component: Home
+  //},
+  //{
+  //  path: '/about',
+  //  name: 'About',
+  //  component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  //}
+]
+//注意：下面传的参数名必须routes，与上面路由规则一样时可以简写，写一个，但是如果上面定义的是routers时就必须写成{routes:routers}.石锤自己的粗心大意，写错后不报任何错，小白很难发现
+const router = new VueRouter({
+  routes
+})
+export default router
+---------------------
+修改main.js文件里面的内容
+---------------------
+import Vue from "vue";
+import App from "./App.vue";
+//引入刚才创建的router路由
+import router from "./router";
+
+Vue.config.productionTip = false;
+
+new Vue({
+  //创建vue实例时传入
+  router,
+  render: h => h(App)
+}).$mount("#app");
+----------------------
+使用：
+--------html----------
+<div>
+   <router-link to="/">Go to a</router-link>
+   <router-link to="/b">Go to b</router-link>
+</div>
+<router-view></router-view>
+----------------------
+----------js----------
+  computed: {
+    username() {
+      // 我们很快就会看到 `params` 是什么
+      return this.$route.params.username
+    }
+  },
+  methods: {
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    }
+  }
+-----------------------
+
+
+
+完整的导航解析流程
+	导航被触发。
+	在失活的组件里调用离开守卫。
+	调用全局的 beforeEach 守卫。
+	在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+	在路由配置里调用 beforeEnter。
+	解析异步路由组件。
+	在被激活的组件里调用 beforeRouteEnter。
+	调用全局的 beforeResolve 守卫 (2.5+)。
+	导航被确认。
+	调用全局的 afterEach 钩子。
+	触发 DOM 更新。
+	用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。

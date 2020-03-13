@@ -1,0 +1,85 @@
+Auto Close Tag   自动关闭标签
+Auto Import
+Auto Rename Tag  
+Babel JavaScript 
+Babelrc
+Beautify
+Beautify css/sass/scss/less
+Bracket Pair Colorizer 让括号拥有独立的颜色，易于区分。可以配合任意主题使用。
+Can I Use
+Chinese (Simplified) Language Pack for Visual Studio Code
+Class autocomplete for HTML
+Code Spell Checker.............................
+Color Info
+DotENV
+EditorConfig for VS Code
+ejs Snippets
+Emoji
+ESLint
+File Peek
+filesize
+Find-Jump
+Git Blame
+gitignore
+GitLens — Git supercharged  丰富的git日志插件
+HTML CSS Support 让 html 标签上写class 智能提示当前项目所支持的样式新版已经支持scss文件检索
+HTML Snippets 超级实用且初级的 H5代码片段以及提示
+HTMLHint html代码检测
+IntelliSense for CSS class names in HTML
+JavaScript (ES6) code snippets
+jQuery Code Snippets
+language-stylus
+Live Server
+Markdown Preview Enhanced
+markdownlint
+One Dark Pro （主题）
+//Material Icon Theme (文件图标)
+npm Intellisense
+open in browser
+Prettier - Code formatter
+Vetur
+VueHelper
+
+Adonis JS Goto View
+
+REST Client
+Browser Preview 预览页面
+
+indent-rainbow 缩进
+Path Intellisense 路径补全
+
+Highlight Matching Tag 成对标签高亮
+
+fileheader 顶部注释模板
+Import Cost 引包的大小
+
+
+
+
+ThisCrackLicenseId-{ 
+“licenseId”:”ThisCrackLicenseId”, 
+“licenseeName”:”idea”, 
+“assigneeName”:”“, 
+“assigneeEmail”:”idea@163.com”, 
+“licenseRestriction”:”For This Crack, Only Test! Please support genuine!!!”, 
+“checkConcurrentUse”:false, 
+“products”:[ 
+{“code”:”II”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”DM”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”AC”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”RS0”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”WS”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”DPN”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”RC”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”PS”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”DC”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”RM”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”CL”,”paidUpTo”:”2099-12-31”}, 
+{“code”:”PC”,”paidUpTo”:”2099-12-31”} 
+], 
+“hash”:”2911276/0”, 
+“gracePeriodDays”:7, 
+“autoProlongated”:false} 
+
+
+

@@ -1,0 +1,16 @@
+# .bashrc 中加如
+# source /etc/profile
+# source ~/.bash_profile
+
+
+
+
+export NODE_HOME=~/app/node-v12.16.0
+export NODE_PATH=$NODE_HOME/lib/node_modules
+
+export JAVA_HOME=~/app/jdk1.8.0_201
+export CLASSPATH=.:$JAVA_HOME/bin.tools.jar
+
+export MONGODB=~/app/mongodb/bin
+
+export PATH=$PATH:$NODE_HOME/bin:$JAVA_HOME/bin:CLASSPATH:JAVA_HOME:$MONGODB

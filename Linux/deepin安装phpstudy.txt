@@ -1,0 +1,69 @@
+安装：
+Centos安装脚本 yum install -y wget && wget -O install.sh https://download.xp.cn/install.sh && sh install.sh
+Ubuntu安装脚本 wget -O install.sh https://download.xp.cn/install.sh && sudo bash install.sh
+Deepin安装脚本 wget -O install.sh https://download.xp.cn/install.sh && sudo bash install.sh
+Debian安装脚本 wget -O install.sh https://download.xp.cn/install.sh && sudo bash install.sh
+
+登录面板：
+http://127.0.0.1:9080/1760FB
+账户：admin
+密码：生成的自己看
+官网https://www.xp.cn
+
+查看帮助
+sudo phpstudy 
+
+注意：下列命令需要加权限验证sudo
+如：sudo phpstudy -start
+=================查看命令========================
+
+1) phpstudy -start             启动phpstudy
+2) phpstudy -stop              停止phpstudy
+3) phpstudy -restart           重启phpstudy
+4) phpstudy -status            查询phpstudy状态
+5) phpstudy -initpwd newPwd    修改登录密码
+6) phpstudy -visiturl          查看面板登录信息
+7) phpstudy -repair            修复主控web面板
+8) phpstudy -instinfo          查看首次安装登录信息
+98) phpstudy -uninstall        卸载phpstudy
+0) phpstudy -h                 显示本页
+
+
+配置站点：
+开启apche2.4.39
+网站->添加站点->站点域名随便输入（如：ws）->备注默认，或者随便写->执行目录默认->程序语言，如果要配置phpmysqladmin则选择php默认安装版5.5->ftp和mysql根据自己需要选择（第一次测试使用的话不用管这两个选项）->保存。
+点击网站更目录下面自己创建的那个（如：/www/admin/ws_80/wwwroot）->文件上传（可以自己新建一个inde.html，内容：hello。）
+浏览器输入：http://localhost：80（访问这个站点，可看到hello字样）
+不需要改hosts文件
+
+
+
+配置数据库管理工具：phpMyAdmin_4.9.0.1
+数据库->表格上面phpMyAdmin按钮-> 操作处点安装->选择刚才创建的ws站点->保存
+访问点管理会打开http://ws/phpMyAdmin_4.9.0.1?phpstudy_token=点击管理时的那个，默认的一般私密，所以我影藏了，打开网址是不要变动---------->网址换成http://localhost/phpMyAdmin_4.9.0.1/?phpstudy_token=点击管理时默认的一般私密，所以我影藏了，打开网址是不要变动（只要改ws为localhost，后面token=后面的默认自己的不要变动，教程隐藏了见谅）
+
+
+
+查看本地磁盘phpstudy所在位置：
+whereis phpstudy
+进入那个目录的vhost下面可以配置服务器，也可以在网站面板中配置
+
+查看站点位置：
+cd /www
+可以看到我们的www在系统更目录下
+直接点击文件管理的系统盘可以看到www
+里面就是我们的站点，
+
+
+注意：数据库端口如果非3306，可能导致管理工具无法连接，但是项目链接，没问题
+
+
+
+
+
+
+
+
+
+
+

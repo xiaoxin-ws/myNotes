@@ -1,0 +1,30 @@
+压缩版
+
+配置环境变量
+变量名：MongoDB
+变量值：D:\mongodb64
+
+在path中加入：
+%MongoDB%\bin;
+
+MongoDB需要自己创建存放数据的文件夹和配置文件
+data文件夹----------->db和log文件夹
+mongo.conf文件
+	# 数据库路径
+	dbpath=D:\mongodb64\data\db
+	# 日志输出文件路径
+	logpath=D:\mongodb64\data\log\mongo.log
+	# 错误日志采用追加模式
+	logappend=true
+	# 启用日志文件(默认启用)
+	journal=true
+	# 这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false
+	quiet=true
+	# 端口号(默认为27017)
+	port=3308
+
+以管理员权限打开cmd命令行，配置MongoDB加入到服务列表
+	mongod --config D:\mongodb64\mongo.conf --install --serviceName "MongoDB"
+指定写入数据文件的目录，不要关闭命令行页面
+	mongod.exe --dbpath "D:\mongodb64\data\db"
+	再启动一个命令行，输入mongo.exe，浏览器访问127.0.0.1:3308。

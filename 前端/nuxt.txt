@@ -1,0 +1,105 @@
+安装vue-cli
+创建项目：vue init nuxt-community/koa-template  nuxthello
+
+编译报错解决办法：
+不需要nuxt降级也是可以的.
+backpack-core 升级到最新版本( 0.8.3)
+eslint(3.19.0) 和 eslint-loader (2.1.1)也需要升级. 不然编译同样会报错
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+sudo sysctl --system
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+链接：https://www.zhihu.com/question/291456964/answer/964790823
+主要针对 nuxt 的 SSR 渲染。第二版因为上一版有一些隐藏性的问题，所以第二版进行了改进。主要使用了 `vue-awesome-swiper` 这个组件。// nuxt.config.js
+
+plugins: [
+  ... Other plugins
+  {
+    // 引入一个插件，这里的 ssr 表示使用服务端渲染
+    src: "plugins/vue-swiper.js", ssr: false
+  }
+  ... 
+]
+这个插件内部这样写。// ~/plugins/vue-swiper.js
+
+import Vue from 'vue'
+
+const VueAwesomeSwiper = require('vue-awesome-swiper/dist/ssr')
+Vue.use(VueAwesomeSwiper)
+继而再你的页面里面这样写。// pages/index.vue
+
+<template>
+  <div v-swiper:mySwiper="swiperOption">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" v-for="banner in banners">
+        <img :src="banner">
+      </div>
+    </div>
+    <div class="swiper-pagination swiper-pagination-bullets"></div>
+  </div>
+</template>
+
+<script>
+ export default {
+   async asyncData ({ app, route }) {
+    // 假设通过一个接口获取 banners
+    let { data:banners } = await app.$performAction('banner', 'get')
+    return {
+      banners
+    }
+  },
+  data () {
+    return {
+      // 轮播图配置信息, 更多请参考 swiper.js 中文网，上面很详细。
+      swiperOption: {
+        speed: 400,
+        autoplay: true,
+        delay: 3000,
+        observer: true,
+        observerParent: true,
+        observeSlideChildren: true,
+        direction: 'horizontal',
+        paginationClickable: true,
+        autoplayDisableOnInteraction: false,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+      }
+    }
+  }
+</script>
+然后访问，即可看到。第一版言归正传，最近在使用 nuxt 重构公司的项目。刚好用到了 swiper ，我是这样用的。// 一个具体的页面文件。
+
+export default {
+  ...
+  // 引入 swiper 的相关依赖
+  head: {
+    link: [
+      { rel: 'stylesheet', href: 'https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css' },
+    ],
+    script: [
+      { src: 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js' },
+      { src: 'https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js' },
+    ]
+  },
+  ...
+  // 使用的话直接用即可
+  mounted () {
+    this.$nextTick(() => {
+      new Swiper('#EleID', {
+  	slidesPerView: 3,
+  	spaceBetween: 30,
+        autoplay: 4000,
+        // 相关参数
+        ...
+      })
+    })
+  }
+}
+查看相关文档，看有的使用采用插件的形式载入到 nuxt 中，详细参考 vue-awesome-swiper 该插件，直接 github 搜。如果项目中多处使用该插件的话，建议使用插件。少量使用的话采用刚刚那个例子给出的即可。Thanks
+----------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+System limit for number of file watchers reached
+https://blog.csdn.net/weixin_43760383/article/details/84326032
+
+ 
+
+sudo xed /etc/sysctl.conf
+
+在最下添加
+
+fs.inotify.max_user_watches=524288
+
+保存退出
+
+sudo sysctl -p

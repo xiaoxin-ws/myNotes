@@ -1,0 +1,205 @@
+下载
+1.configure: error: Cannot build a 32-bit program, you need to install 32-bit development libraries.
+
+$ ./configure --enable-win64
+
+2.缺少依赖  flex
+$ sudo apt-get install flex
+
+3.缺少依赖bison
+$ sudo apt-get install bison
+
+4.make install缺少权限：
+$  sudo make install 
+
+
+-----------------------------------------------------
+原文：https://wiki.winehq.org/Gecko
+安装gecho
+正在安装
+当您的应用程序尝试显示站点时，Wine加载并使用其自定义的Gecko实现。Wine尝试按以下顺序查找Gecko安装：
+
+如果前缀中已经安装了Wine Gecko，则将使用该安装。
+Wine 5.0-rc1及更高版本将尝试从UNIX风格的安装中加载Gecko，而不将其安装到前缀中。它将查找标准本地查找的wine-gecko-$（VERSION）-$（ARC）子目录（请参见下面的内容）。
+Wine将尝试在本地计算机上找到Wine Gecko MSI安装程序（请参见下面的内容）。如果可以找到它，它将安装到该前缀中并使用它。
+如果在您的计算机上找不到该文件，Wine会为您下载。下载的.msi文件保存到〜/ .cache / wine。如果下载失败，则可以从http://dl.winehq.org/wine/wine-gecko/自己下载适当的版本（请参见下表）。
+
+每当Wine尝试查找本地安装时，它都会在以下目录中查找：
+
+在大多数情况下，文件应该放在/ usr / share / wine / gecko中。
+如果将Wine安装在$ prefix而非/ usr中，则$ prefix / share / wine / gecko /在/ usr / share / wine / gecko之前。（例如，如果您是从源代码安装的，则将文件放在/ usr / local / share / wine / gecko中）。
+如果从构建树运行Wine，Wine会尝试在$ build_dir /../ gecko目录中查找文件。
+本地缓存，通常是〜/ .cache / wine。
+
+对于64位（WoW64）Wine，需要x86和x86_64软件包。
+
+如果Wine无法将其映射到DOS驱动器（例如，如果删除了z：驱动器），则当前将无法使用这种Gecko安装。
+----------------------------------------------------------------------------
+
+
+安装wine：
+	原文地址：
+		https://bbs.deepin.org/forum.php?mod=viewthread&tid=176555
+	开启 32 bit 架构支持
+		sudo dpkg --add-architecture i386 
+	/etc/apt/sources.list中添加源
+		deb https://dl.winehq.org/wine-builds/debian/ stretch main
+	下载key
+		wget -nc https://dl.winehq.org/wine-builds/winehq.key
+	绑定key，成功出现OK
+		sudo apt-key add winehq.key
+	刷新上面绑定的源
+		sudo apt update
+	安装软件
+		sudo apt install --install-recommends winehq-stable
+	有几个软件包无法下载，要不运行 apt-get update 或者加上 --fix-missing 的选项再试试？于是，执行以下命令，补安装之前报错失败的部分软件包
+		sudo apt install --install-rsudo apt autoremoveecommends winehq-stable --fix-missing
+	检查wine是否安装成功
+		wine --version
+解决安装器下载慢问题：（没啥用，貌似）
+源地址：https://my.oschina.net/wecnlove/blog/908300
+sudo gedit /etc/hosts
+193.1.193.66 nchc.dl.sourceforge.net
+193.1.193.66 ncu.dl.sourceforge.net
+
+
+deepin 15.11 内置的是自家的特定优化版本 deein-wine，版本大约 2.x 左右，用于 qq，百度网盘等优化过的应用。这里安装的是官方的最新版本 wine 4.x，与内置的各有优劣，也互不影响。毕竟 deepin 中基于 deepin-wine 的软件都是分容器隔离的（WINEPREFIX=～/.deepinwine/Deepin-BaiduNetDisk deepin-winecfg
+可设置百度网盘的容器），只要别用 wine 4.x 去 deepin-wine 的容器中乱操作就不会出问题。
+
+安装 wine 最新版
+
+1、打开终端
+
+桌面右键-在终端中打开
+
+2、开启包管理器 32 位架构支持
+
+sudo dpkg --add-architecture i386
+
+3、安装用于签发安装包的密钥
+
+wget -nc https://dl.winehq.org/wine-builds/winehq.key
+sudo apt-key add winehq.key
+
+4、添加 wine 软件源
+
+在 /etc/apt/sources.list.d/ 创建一个名为 winehq.list 的文件（sudo deepin-editor /etc/apt/sources.list.d/winehq.list），并包含以下内容：
+
+deb https://dl.winehq.org/wine-builds/debian/ stretch main
+
+其中 stretch 是 debian 9 的代号，deepin 目前版本（lion）基于它构建，所以选择 stretch 的软件源是可以兼容的。不过deepin 下一个大版本应该是基于 debian 10，代号 buster，以后安装的请注意。
+
+5、添加公钥验证指纹
+
+sudo apt install dirmngr
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
+
+6、更新本地软件仓库索引
+
+sudo apt update
+
+7、安装 wine 最新版
+
+不想折腾的话，可以安装稳定分支：
+sudo apt install --install-recommends winehq-stable
+
+希望跟上最新的小版本更新的话，可以安装开发分支：
+sudo apt install --install-recommends winehq-devel
+
+需要使用 vulkan 玩大型游戏的，可以安装 staging 分支（包含有一些新特性）：
+sudo apt install --install-recommends winehq-staging
+
+wine 的源比较慢，最好选择国内人不上网的时间操作，如晚上 10 点以后或早上 8 点以前。
+
+8、验证安装结果
+
+查看当前版本号：
+wine --version
+
+9、wine 升级
+
+由于添加了 apt 源，除非重装系统，以后就随系统一起升级了。手工的话，
+sudo apt update
+sudo apt upgrade -y  # 如果上面的命令显示有软件可升级的话
+
+exe 文件双击打开
+
+安装后会发现启动器中多了一个名为 Wine Windows Program Loader 的软件图标（desktop 文件，具体位置在 /usr/share/applications 或 ~/.local/share/applications），可以在文件管理器中右键点击 exe 文件，把默认打开方式改成它，以后就可以直接双击打开 Windows 可执行文件了。
+
+基础组件
+
+很多 Windows 程序需要浏览器和 .net 组件，wine 自己安装比较慢，这里分享下。主要包括 wine_gecko-2.47-x86_64.msi，wine_gecko-2.47-x86.msi，wine-mono-4.9.3.msi 等文件。运行 wine uninstaller 打开 添加/删除程序 即可选择安装。
+
+链接: https://pan.baidu.com/s/13SbfJMt2qDxJ9x0aW4bjwg 密码: lj0q
+
+wine 内置命令
+
+主要通过 wine xxxx 运行，以 wine 开头的可直接运行，如 winecfg
+
+cacls - ACL 编辑
+clock - 显示一个原始时钟
+cmd - 命令提示符
+cmdlgtst - (用于开发者) commdlg.dll test jig
+control - 控制面板
+eject - 弹出光盘 (注意，wine 弹出不同与正常的弹出命令)
+expand - 扩展 cabinet (.cab) 文件
+explorer - explorer.exe（Windows 文件浏览器）
+hh - HTML 帮助文件 (.chm file) 阅读器
+icinfo - 显示已安装的 Wine 视频编解码器
+iexplore - Internet Explorer 实现（基于 gecko）
+lodctr - 加载性能监视计数器
+msiexec - msiexec.exe，用于安装 .msi 文件
+net - 启动和停止服务
+notepad - Notepad，一个简单的文本编辑器
+oleview - 实现浏览探索 COM 对象，也可以配置 DCOM
+progman - 程序管理器实现
+reg - 基于控制台的注册表编辑器
+regedit - 注册表编辑器
+regsvr32 - 在注册表中注册 OLE 组件
+rpcss - rpcss.exe 的表面实现
+rundll32"] - 加载一个 DLL 并使用指定的参数运行一个入口
+secedit - 安全配置编辑命令
+services - 服务管理
+spoolsv - 脱机打印
+start - 启动一个程序，或通过通常用于处理此文件后缀的程序打开一个文档
+svchost - (internal) 服务宿主进程
+taskmgr - 任务管理器
+uninstaller - 基本的添加/删除程序
+unlodctr - 卸载性能监视计数器
+view - metafile 阅读器
+wineboot - "重新启动" (重新开始) Wine，用于当 Windows 应用需要真正的重新启动时
+winebrowser - 启动本地 OS 浏览器或邮件客户端
+winecfg - Wine 的 GUI 配置工具
+wineconsole - 显示 Windows 控制台
+winedbg - Wine 调试器核心
+winedevice - (internal) 设备管理
+winefile - 文件浏览器
+winemenubuilder - 辅助构建 Unix 菜单项
+winemine - 经典扫雷游戏
+winepath - 转换 Windows 和 Unix 路径格式
+winetest - 适合无人参与的测试和报告提交的 DLL 一致性测试程序
+winevdm - Wine 虚拟 DOS 程序
+winhelp - Help 阅读器
+winhlp32 - Help 阅读器 (32-bit)
+winver - 显示一个 "about Wine" 窗口
+wordpad - wordpad.exe（写字板）
+write - 启动 wordpad (用于兼容 Win16)
+xcopy - 兼容 Wine 的 xcopy 程序
+
+安装其他组件
+
+另外可以安装 winetricks（sudo apt install winetricks），然后通过它安装需要的组件。不过不太好用，偶尔可以用用。
+
+软件界面汉字乱码的话，请使用 deepin 自带的字体安装器安装需要的字体。
+
+参考：
+https://wiki.winehq.org/Debian_zhcn
+https://bbs.deepin.org/forum.php?mod=viewthread&tid=174239
+https://wiki.winehq.org/List_of_Commands
+https://wiki.winehq.org/Winetricks
+https://wiki.winehq.org/Wine_User's_Guide
+
+
+
+
+

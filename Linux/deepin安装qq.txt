@@ -1,0 +1,38 @@
+原文：https://www.cnblogs.com/crab-in-the-northeast/p/deepin-wine-qq-cannot-load-pic.html
+
+deepin-wine winecfg
+先下载两个flash 插件，附上下载链接
+flashplayerpp_install_cn.exe
+flashplayerax_install_cn.exe
+记住flash程序的存放目录（我放到了~/.wine/drive_c下，自己指定，非必须）
+使用deepin-wine winecfg打开wine的设置界面
+在应用程序下，选择增加程序设置，找到对应的两个flash插件，windows版本我设置为了win7，因为设置全局不起作用。
+应用，确认，重启QQ就好了。
+
+
+
+打开应用商店安装qq即可
+
+问题：无法加载图片。
+具体点是：如果图片没有被其他设备接收，并且在缓存中，图片是可以加载的，反之不可。
+项目issue中的解决办法：https://github.com/wszqkzqk/deepin-wine-ubuntu/issues/222
+然后找到了解决方案：
+关闭ipv6
+sudo gedit /etc/sysctl.conf
+------------------------------------  内容如下，在文本的末尾添加。。。。
+# IPv6 disabled
+net.ipv6.conf.all.disable_ipv6 =1
+net.ipv6.conf.default.disable_ipv6 =1
+net.ipv6.conf.lo.disable_ipv6 =1
+--------------------------------
+
+刷新配置
+sudo sysctl -p //update
+ipconfig  //这个命令貌似找不到，可以安装一个
+
+清理缓存：
+sudo rm -rf ~/.deepinwine/Deepin-QQ
+
+其他容器，比如Tim，Wechat，替换上面的QQ就好。
+然后打开QQ，登录的时候头像显示为默认头像，登录完毕正式上线就是最新头像了！浏览聊天记录，问题解决。
+另外，群聊需要双击打开才能更新头像，但很快。

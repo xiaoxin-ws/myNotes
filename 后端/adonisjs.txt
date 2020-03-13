@@ -1,0 +1,227 @@
+0.项目构建
+安装脚手架：cnpm i -g @adonisjs/cli
+默认模板：adonis new yardstick
+安装老师的模板：adonis new adonis-blog --blueprint wxs77577/adonis-mongo-app --cnpm
+进入项目：cd yardstick
+启动：adonis serve --dev,adonis migration:run
+帮助：adonis --help
+
+1.路由配置：
+routes.js文件
+'use strict'
+const Route = use('Route')
+Route.get('/', "SiteController.index")
+Route.get('/home',"SiteController.home")
+Route.get('/posts',"PostController.index")
+Route.get('/posts/:id',"PostController.show")
+
+创建控制器：adonis make:controller site
+SiteController.js文件
+'use strict'
+class SiteController {
+    // 不带参数请求"GET"http://127.0.0.1:3333
+    index(){
+        return "/"
+    }
+    //带参数请求"GET"http://127.0.0.1:3333/home?q=1
+    home({request}){
+        return "home" + request.input("q");
+    }
+}
+module.exports = SiteController
+
+创建post控制器：adonis make:controller post
+PostController.js文件
+'use strict'
+class PostController {
+    //带参数的请求"GET"http://127.0.0.1:3333/posts?page=1
+    index({request}){
+        return "posts"+ request.input('page');
+    }
+    //"/"后面带的参数  http://127.0.0.1:3333/posts/1231
+    show({params}){
+        return "post" +params.id
+    }
+}
+module.exports = PostController
+
+
+
+3.数据库，数据模型
+创建模型：adonis make:model post
+
+4.视图：模板页面
+创建视图：adonis make:view posts.index
+app.js添加一个providers：“@adonisjs/framework/providers/ViewProvider”
+  const posts = await Post.all();
+  //第一个参数是模板，第二个是数据对象，转化为json格式
+   return await view.render("posts.index", {
+      posts: posts.toJSON()
+  });
+
+页面上数据渲染：
+<h1>我的博客</h1>
+<h4>文章列表</h4>
+<ul>
+  @each(post in posts)
+  <li>{{post.title}}</li>
+  @endeach
+</ul>
+
+页面跳转：
+<li><a href="/post/{{post._id}}">{{post.title}}</a></li>
+
+
+
+后台接口：
+一键曾删改查方法：
+adonis make:controller Admin/Post --resource
+路由
+Route.resource("/admin/api/posts", "Admin/PostController");
+控制器：
+"use strict";
+
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Response')} Response */
+/** @typedef {import('@adonisjs/framework/src/View')} View */
+
+const Post = use("App/Models/Post");
+/**
+ * Resourceful controller for interacting with posts
+ */
+class PostController {
+  /**
+   * Show a list of all posts.
+   * GET posts
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async index({ request, response, view }) {
+    return Post.query().paginate(1, 10);
+  }
+
+  /**
+   * Render a form to be used for creating a new post.
+   * GET posts/create
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async create({ request, response, view }) {}
+
+  /**
+   * Create/save a new post.
+   * POST posts
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async store({ request, response }) {
+    const data = request.only(["title"]);
+    const model = new Post();
+    model.fill(data);
+    await model.save();
+    return model;
+  }
+
+  /**
+   * Display a single post.
+   * GET posts/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async show({ params, request, response, view }) {
+    return await Post.find(params.id);
+  }
+
+  /**
+   * Render a form to update an existing post.
+   * GET posts/:id/edit
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async edit({ params, request, response, view }) {}
+
+  /**
+   * Update post details.
+   * PUT or PATCH posts/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async update({ params, request, response }) {
+    const data = request.only(["title"]);
+    const model = await Post.find(params.id);
+    model.merge(data);
+    await model.save();
+    return model;
+  }
+
+  /**
+   * Delete a post with id.
+   * DELETE posts/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async destroy({ params, request, response }) {
+    const model = await Post.find(params.id);
+    await model.delete();
+    return {
+      success: true
+    };
+  }
+}
+
+module.exports = PostController;
+
+
+
+
+.http
+@uri=http://localhost:3333/admin/api/
+
+###
+GET {{uri}}index
+
+###
+GET {{uri}}posts
+
+###
+GET {{uri}}posts/5e54f82d753b095af5841c60
+
+###
+POST {{uri}}posts
+Content-Type: application/json
+
+{
+  "title": "我的第三篇博客"
+}
+
+###
+PUT {{uri}}posts/5e5515047e8dd40677ff65a7
+Content-Type: application/json
+
+{
+  "title": "我的第二篇博客"
+}
+
+###
+DELETE  {{uri}}posts/5e55150a7e8dd40677ff65a9
+
+
+

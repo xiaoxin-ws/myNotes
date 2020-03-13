@@ -1,0 +1,154 @@
+原文地址：https://www.meiwen.com.cn/subject/dsfrhqtx.html
+安装依赖：
+sudo aptitude install build-essential
+sudo aptitude install libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev
+官网下载
+https://www.mongodb.com/download-center/community
+下载Debian 9 Linux 64-bit x64版本的4个deb包
+server,mongos,tools,shell
+启动mongodb服务,mongod，启动客户端mongo
+
+
+https://www.mongodb.org/dl/linux/x86_64
+mongodb-linux-x86_64-debian92-v4.2-latest.tgz
+创建data
+data/db
+data/log
+/home/xiaoxin/app/mongodb/bin/mongod --port 27017 --dbpath=/home/xiaoxin/app/mongodb/data/db
+
+不正常退出会造成下次无法启动
+解决办法：删除mongo.lock，然后：mongod  --repair
+
+正确关闭mongod 的方法：进入mongo shell
+use admin
+db.shutdownServer()
+quit() 退出mongo shell界面
+
+
+
+安装方法（终结版）：
+原文：https://www.cnblogs.com/hello-wei/p/11959463.html
+软件下载地方：https://www.mongodb.org/dl/linux/x86_64
+需要下载的版本：mongodb-linux-x86_64-debian92-v4.2-latest.tgz
+归档管理器解压到存放软件的目录下（如:/home/username/app/解压目录）；
+命令： tar -xzvf mongodb-linux-x86_64-debian92-v4.2-latest.tgz
+重名名：mv mongodb-linux-x86_64-debian92-v4.2-latest mongodb
+mongodb创建data
+data下创建db
+data下创建logs
+命令：mkdir db  logs
+
+环境变量：我的是打开终端路径默认时（sudo gedit .bash_profile）;
+
+export MONGODB=~/app/mongodb/bin
+export PATH=$PATH:$MONGODB
+
+使生效    source ~/.bash_profile
+解决重启终端失效问题：（打开终端路径默认时） sudo gedit .bashrc
+在首行加入：source ~/.bash_profile
+
+创建配置文件：sudo gedit mongodb.conf
+dbpath = /home/xiaoxin/app/mongodb/data/db               #数据文件存放目录
+logpath =/home/xiaoxin/app/mongodb/data/logs/mongodb.log #日志文件存放目录
+logappend = true
+port = 27017    #端口
+fork = true     #以守护程序的方式启用，即在后台运行
+#auth=true      #需要认证。如果放开注释，就必须创建MongoDB的账号，使用账号与密码才可远程访问，第一次安装建议注释
+bind_ip=0.0.0.0 #允许远程访问，或者直接注释，127.0.0.1是只允许本地访问
+journal=true
+quiet=true
+
+启动MongoDB
+mongod  -f  mongodb.conf
+------------------------
+about to fork child process, waiting until server is ready for connections.
+forked process: 4858
+child process started successfully, parent exiting
+------------------------
+
+关闭MongoDB
+mongod  -f  mongodb.conf --shutdown
+--------------------------
+2019-11-29T22:27:10.645+0800 I  CONTROL  [main] log file "/root/mongodb/logs/mongodb.log" exists; moved to "/root/mongodb/logs/mongodb.log.2019-11-29T14-27-10".
+killing process with pid: 4858
+--------------------------
+
+创建MongoDB的账号
+mongo
+---------------------------
+MongoDB shell version v4.2.1
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("3e1cfaee-6dc4-460b-b986-661b11f7cbc3") }
+MongoDB server version: 4.2.1
+Welcome to the MongoDB shell.
+...
+---------------------------
+
+> show dbs;
+----------------------------
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+-----------------------------
+> use admin
+---------------------------
+switched to db admin
+----------------------------
+> show users
+
+> show collections
+--------------------------------
+system.version
+-------------------------------
+> db.createUser({ user: 'root', pwd: 'root',roles: [ { role: "dbOwner", db: "test" }] })
+------------------------------------------------
+Successfully added user: {
+        "user" : "root",
+        "roles" : [
+                {
+                        "role" : "dbOwner",
+                        "db" : "test"
+                }
+        ]
+}
+-----------------------------------------------------
+> db.auth("root","root")
+-------------------------------
+1
+---------------------------------
+> use test
+-------------------------
+switched to db test
+---------------------------
+> db.firstCollection.save({"name":"yzh","age":"25"})
+-------------------------------------------------------------
+WriteResult({ "nInserted" : 1 })
+------------------------------------------------------------------
+> db.firstCollection.find({name:"yzh"})
+------------------------------------------------------------------
+{ "_id" : ObjectId("5de12c9c771bf721cc7a0b07"), "name" : "yzh", "age" : "25" }
+---------------------------------------------------------------
+>quit()
+--------------------------------
+退出了mongodb shell
+---------------------
+
+至此，MongoDB 创建完成！
+
+
+
+创建快捷方式：mongodb/bin
+新建：rundb.sh
+内容：
+./mongod  -f  mongodb.conf
+赋予权限：
+chmod u+x rundb.sh
+
+新建：downdb.sh
+内容：
+./mongod  -f  mongodb.conf --shutdown
+赋予权限：
+chmod u+x downdb.sh
+
+
+

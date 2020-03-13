@@ -1,0 +1,25 @@
+原文：https://blog.csdn.net/qq_29753285/article/details/93992594
+
+1.将下载链接去掉https
+由于下载时默认是https，所以会慢一些，使用http之后虽然还是慢，但是也能稳定在400k左右，不急的话这速度十分钟之内就可以下完，
+
+2.国内各大公司的镜像站
+比如华为的：https://repo.huaweicloud.com/java/jdk/
+
+下载自己的版本
+
+解压到存放软件的文件夹
+
+
+环境变量：
+# .bashrc 中加入（不用每次打开终端都执行source命令）
+---------------------------
+# source /etc/profile
+source ~/.bash_profile
+---------------------------
+
+在/home/用户/.bash_profile
+
+export JAVA_HOME=~/app/jdk1.8.0_201
+export CLASSPATH=.:$JAVA_HOME/bin.tools.jar
+export PATH=$PATH:$JAVA_HOME/bin:CLASSPATH:JAVA_HOME:$MONGODB

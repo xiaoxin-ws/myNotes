@@ -1,0 +1,16 @@
+安装： npm install -g koa-generator
+创建项目： koa2 name
+创建时指定模板：koa2 -e name
+
+   install dependencies:
+     $ cd koa2 && npm install
+
+   run the app:
+     $ DEBUG=koa2:* npm start
+     $ npm run dev(自动重启)
+
+访问：
+http://localhost:3000
+
+
+
