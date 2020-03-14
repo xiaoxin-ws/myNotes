@@ -1,19 +1,29 @@
-http://nodejs.cn/
+第一步：
+	http://nodejs.cn/
+	下载，下载Linux 二进制文件 (x64)
+第二步：
+	归档提取下载的文件到软件安装目录（我是在主目录下新建名为app的文件夹存放的）
 
-下载，下载Linux 二进制文件 (x64)
+第三步：
+	设置环境变量：
+	执行：sudo gedit ~/.bash_profile    （注意如果提示没有gedit命令就执行 sudo apt-get install gedit 安装编辑器）
+	内容如下：	(如果有内容就在后面添加，如没有就直接添加)
+	-----------------------------------------
+	export NODE_HOME=~/app/node-v12.16.0
+	export NODE_PATH=$NODE_HOME/lib/node_modules
+	export PATH=$PATH:$NODE_HOME/bin
+	-----------------------------------------------
+第四步：
+	执行source ~/.bash_profile更新变量设置
+第五步：
+	检查环境是否配置成功
+	终端输入node -v
 
-归档提取到软件安装目录
+注意：（打开新终端窗口node命令失效问题）
+        执行source ~/.bash_profile可解决（是不是很麻烦）
+第六步：
+	解决上面每次打开终端都要更新环境变量的麻烦
+	执行：sudo gedit ~/.bashrc
+        在文件开头添加：source ~/.bash_profile保存关闭（可解决）
 
-环境变量：
-~/.bash_profile文件，如果没有就新建一个
------------------------------------------
-export NODE_HOME=~/app/node-v12.16.0
-export NODE_PATH=$NODE_HOME/lib/node_modules
-export PATH=$PATH:$NODE_HOME/bin
------------------------------------------------
-执行
-source ~/.bash_profile
-node -v
-解决每次打开终端都要source ~/.bash_profile
-sudo gedit ~/.bashrc
-开头添加：source ~/.bash_profile保存关闭（可解决）
+ok啦。。。。。。。。。。。
