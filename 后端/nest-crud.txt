@@ -1,0 +1,8 @@
+多仓库连接mysql原文：https://www.colabug.com/2020/0214/6993220/amp/
+
+
+npm install --save @nestjs/typeorm typeorm mysql
+
+npm install --save @nestjs/swagger swagger-ui-express
+
+npm i @nestjsx/crud class-transformer class-validator @nestjsx/crud-typeorm

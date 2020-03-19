@@ -1,3 +1,5 @@
+原文：phpstudy官网
+
 安装：
 Centos安装脚本 yum install -y wget && wget -O install.sh https://download.xp.cn/install.sh && sh install.sh
 Ubuntu安装脚本 wget -O install.sh https://download.xp.cn/install.sh && sudo bash install.sh

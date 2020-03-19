@@ -188,7 +188,7 @@ xcopy - 兼容 Wine 的 xcopy 程序
 
 安装其他组件
 
-另外可以安装 winetricks（sudo apt install winetricks），然后通过它安装需要的组件。不过不太好用，偶尔可以用用。
+另外可以安装 winetricks（sudo apt install winetricks）
 
 软件界面汉字乱码的话，请使用 deepin 自带的字体安装器安装需要的字体。
 

@@ -1,0 +1,318 @@
+安装
+npm i -g @nestjs/cli
+
+创建项目
+一般架构
+nest new project-name
+yarn run start
+
+多应用
+nest g app project-app-name
+nest start -w project-app-name
+
+创建通用库
+nest g lib db
+@libs
+
+安装ts的数据库依赖包 nestjs-typegoose @typegoose/typegoose  
+yarn add nestjs-typegoose @typegoose/typegoose
+
+安装连接数据库包和ts提示
+yarn add mongoose @types/mongoose
+
+创建admin的users模块
+nest g mo -p admin user
+添加控制器
+nest g co -p admin user
+
+安装一行代码实现增删改查
+yarn add nestjs-mongoose-crud
+
+安装接口文档的包
+yarn add @nestjs/swagger swagger-ui-express
+
+安装请求和代码提示
+yarn add axios @types/axios
+
+安装支持阿里云的multer
+yarn add multer-aliyun-oss
+
+列出更新
+yarn upgrade-interactive --latest
+空格选择勾选需要的更新
+
+安装环境配置
+yarn add @nestjs/configd 
+
+前端报any错误
+在tsconfig.json里面的"compilerOptions"下面加入"noImplicitAny":false,
+
+创建nuxt项目，用yarn报错，路径问题
+npm init nuxt-app videoweb
+
+////////////////////////////////////////////////////////////////
+安装脚手架：
+$ npm i -g @nestjs/cli
+
+创建项目：
+$ nest new server   （Standard mode）
+或者  创建具有子项目的项目
+$ nest new server
+$ cd server 
+$ nest g app admin （Monorepo mode）
+
+////////////////////////////////////////////////////////////////
+启动
+$ npm run start
+或者 子项目模式
+$ nest start -w admin   (开发时要加-w)
+
+//////////////////////////////////////////////////////////////////
+或者，使用Git安装TypeScript入门项目：
+$ git clone https://github.com/nestjs/typescript-starter.git project
+$ cd project
+$ npm install
+$ npm run start
+
+////////////////////////////////////////////////////////////////////
+创建公用模块：
+$ nest g lib db     (数据库模块)
+-----> @libs
+
+安装数据库模块(mongseDB)
+https://segmentfault.com/a/1190000021868839
+$ yarn add nestjs-typegoose @typegoose/typegoose mongoose @type/mongoose    
+(1.在nest中使用typegoose,2.typegoose的ts的封装,3.数据库连接模块,4.ts中mongoose的封装)
+
+引用数据库模块
+//libs/db/src/db.module.ts
+-------------------------------------
+import { Module, Global } from '@nestjs/common';
+import { DbService } from './db.service';
+import {TypegooseModule} from 'nestjs-typegoose';
+import { User } from './models/user.model';
+//注册模型
+const models = TypegooseModule.forFeature([
+  User,
+])
+@Global();//注册全局
+@Module({
+imports:[
+   //TypegooseModule.forRootAsync({
+   //  useFactory(){
+   //     return {
+   //       uri:process.env.DB,
+   //       useNewUrlParser:true,
+   //       useUnifiedTopology:true,
+   //       useCreateIndex:true,
+   //       useFindAndModify:false,
+   //     }
+   //   }
+   //}),
+   TypegooseModule.forRoot('mongodb://localhost/数据库名',{
+		useNewUrlParser:true,
+		useUnifiedTopology:true,
+		useCreateIndex:true,
+		useFindAndModify:false		
+    }),
+models
+],
+  providers: [DbService],
+  exports: [DbService,models],
+})
+export class DbModule {}
+........
+
+
+引用公共模块
+//admin/src/app.module.ts
+----------------------------------------
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+//import { DbModule } from '@libs/db';
+import { UserModule } from './user/user.module';
+import { CoursesModule } from './courses/courses.module';
+import { EpisodesModule } from './episodes/episodes.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { CommonModule } from '@app/common';
+//import { MAO } from 'multer-aliyun-oss';
+@Module({
+  imports: [
+    CommonModule,
+    //oss 异步注册配置
+    // MulterModule.registerAsync({
+    //   useFactory(){
+    //     return{       
+    //       storage: MAO({
+    //         config: {
+    //             region: process.env.OSS_REGIN,
+    //             accessKeyId: process.env.OSS_ACCESS_KEY_ID,
+    //             accessKeySecret: process.env.OSS_ASSESS_KEY_SECRET,
+    //             bucket: process.env.OSS_BUCKET
+    //         }
+    //     })
+    //   }
+    // },
+    //本地路径
+    MulterModule.register({
+       dest:'upload'
+    }),
+    CommonModule,
+    //DbModule,
+    UserModule,
+    CoursesModule,
+    EpisodesModule
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+----------------------------------------
+
+创建数据库模型
+//libs/db/src/models/user.model.ts
+----------------------------------------
+import { prop, modelOptions } from "@typegoose/typegoose";
+import { ApiProperty } from "@nestjs/swagger";
+
+@modelOptions({
+    schemaOptions:{
+        timestamps:true
+    }
+})
+export class User{
+    @prop()
+    @ApiProperty({description:'用户名',example:'use1'})
+    username:string
+
+    @prop()
+    @ApiProperty({description:'密码',example:'pass1'})
+    password:string
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+安装一行代码实现增删改查
+yarn add nestjs-mongoose-crud
+
+
+
+项目里面创建模块：
+创建admin的users模块
+nest g mo -p admin user
+-------------------------------------------
+import { Module } from '@nestjs/common';
+import { UserController } from './user.controller';
+
+@Module({
+  controllers: [UserController]
+})
+export class UserModule {}
+
+添加控制器
+nest g co -p admin user
+---------------------------------------
+import { Controller, Get } from '@nestjs/common';
+import { InjectModel } from 'nestjs-typegoose';
+import { User } from '@libs/db/models/user.model';
+import { Crud } from "nestjs-mongoose-crud"
+import { ApiTags } from '@nestjs/swagger'
+@Crud({
+    model:User
+})
+@Controller('user')
+@ApiTags('用户')
+export class UserController {
+    constructor(
+	//注入数据库模型
+        @InjectModel(User) private readonly model)
+        {}
+        @Get('option')
+        option(){
+            return{}
+        }       
+}
+
+//////////////////////////////////////////////////////////////////
+安装接口文档的包
+yarn add @nestjs/swagger swagger-ui-express
+
+配置借口文档
+//admin/src/main.ts
+----------------------------------------------------
+import { NestFactory, NestApplication } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+                                    //申明使用那个组件
+  const app = await NestFactory.create<NestApplication>(AppModule);
+  //允许跨域
+  app.enableCors()
+  //静态文件处理
+  app.useStaticAssets('upload',{
+    prefix:'/upload'
+  })
+
+
+  // DocumentBuilder是一个辅助类，
+  //有助于结构的基本文件SwaggerModule。
+  //它包含几种方法，可用于设置诸如标题，描述，版本等属性。
+  const options = new DocumentBuilder()
+    .setTitle('视频网站后台管理api')
+    .setDescription('供后台管理界面的服务端api') // 文档介绍
+    .setVersion('1.0') // 文档版本
+    //.addTag('用户,安全') // 每个tag标签都可以对应着几个@ApiUseTags('用户,安全') 然后被ApiUseTags注释，字符串一致的都会变成同一个标签下的
+    .build();
+  // 为了创建完整的文档（具有定义的HTTP路由），我们使用类的createDocument()方法SwaggerModule。此方法带有两个参数，分别是应用程序实例和基本Swagger选项。
+  const document = SwaggerModule.createDocument(app, options);
+  // 最后一步是setup()。它依次接受（1）装入Swagger的路径，（2）应用程序实例, （3）描述Nest应用程序的文档。
+  SwaggerModule.setup('api-docs', app, document);
+  const PORT =process.env.ADMIN_PORT || 3002;
+  await app.listen(PORT);
+  console.log(`admin的接口文档：http://localhost:${PORT}/api-docs`);
+  console.log(`admin的接口：http://localhost:${PORT}`);
+  
+}
+bootstrap();import { NestFactory, NestApplication } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+                                    //申明使用那个组件
+  const app = await NestFactory.create<NestApplication>(AppModule);
+  //允许跨域
+  app.enableCors()
+  //静态文件处理
+  app.useStaticAssets('upload',{
+    prefix:'/upload'
+  })
+
+
+  // DocumentBuilder是一个辅助类，
+  //有助于结构的基本文件SwaggerModule。
+  //它包含几种方法，可用于设置诸如标题，描述，版本等属性。
+  const options = new DocumentBuilder()
+    .setTitle('视频网站后台管理api')
+    .setDescription('供后台管理界面的服务端api') // 文档介绍
+    .setVersion('1.0') // 文档版本
+    //.addTag('用户,安全') // 每个tag标签都可以对应着几个@ApiUseTags('用户,安全') 然后被ApiUseTags注释，字符串一致的都会变成同一个标签下的
+    .build();
+  // 为了创建完整的文档（具有定义的HTTP路由），我们使用类的createDocument()方法SwaggerModule。此方法带有两个参数，分别是应用程序实例和基本Swagger选项。
+  const document = SwaggerModule.createDocument(app, options);
+  // 最后一步是setup()。它依次接受（1）装入Swagger的路径，（2）应用程序实例, （3）描述Nest应用程序的文档。
+  SwaggerModule.setup('api-docs', app, document);
+  const PORT =process.env.ADMIN_PORT || 3002;
+  await app.listen(PORT);
+  console.log(`admin的接口文档：http://localhost:${PORT}/api-docs`);
+  console.log(`admin的接口：http://localhost:${PORT}`);
+  
+}
+bootstrap();
+
+
+
+
+

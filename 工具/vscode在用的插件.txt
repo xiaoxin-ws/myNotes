@@ -54,6 +54,17 @@ fileheader 顶部注释模板
 Import Cost 引包的大小
 
 
+MySQL管理工具
+安装
+启动VS Code快速打开（Ctrl+P），粘贴以下命令，然后按Enter。
+ext install formulahendry.vscode-mysql
+
+SQL Server (mssql)
+
+
+TSLint (deprecated)
+
+
 
 
 ThisCrackLicenseId-{ 
