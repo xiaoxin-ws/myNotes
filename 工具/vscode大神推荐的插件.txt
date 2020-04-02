@@ -1,0 +1,134 @@
+Auto Rename Tag : 自动重命名配对的HTML/XML标记
+Auto Close Tag : 自动添加HTML/XML关闭标记，与Visual Studio IDE或Sublime文本相同
+Dependency Analytics ：分析项目中npm模块依赖，给出了很直观的数据反馈（包是否有安全问题等）
+perfect-css-modules ： css module 的体验加成，悬浮提示，智能提示，引用跳转
+Highlight Matching Tag ：标签匹配高亮，支持 jsx，html 及主流的 vue,ng
+-------------------
+我使用的扩展的样式：
+"highlight-matching-tag.styles": {
+  "opening": {
+    "left": {
+      "custom": {
+        "borderWidth": "0 0 0 1.5px",
+        "borderStyle": "solid",
+        "borderColor": "yellow",
+        "borderRadius": "5px",
+        "overviewRulerColor": "white"
+      }
+    },
+    "right": {
+      "custom": {
+        "borderWidth": "0 1.5px 0 0",
+        "borderStyle": "solid",
+        "borderColor": "yellow",
+        "borderRadius": "5px",
+        "overviewRulerColor": "white"
+      }
+    }
+  }
+}
+-------------------
+changelog ：悬浮可以查看安装包在github发布changelog的相关信息
+Color Manager :一个很酷炫的颜色管理插件，很强大
+NestJs Snippets :  NG 即视感的 NodeJS 框架，常用的都说好！！
+Syntax Highlighter ：加强语法高亮，用过才知道！(暗主题)
+Task Explorer ：全局任务管理器，支持多种任务脚本的识别
+TabNine ：基于深度学习训练模型打造的智能提示，很实用，准确率挺高
+Git Graph ：图形化 git log ，还支持代码对比这些
+Git File History ：动态的查看文件git的历史记录，比如代码区域的变动！很炫！
+Beautify : 为VS代码美化代码,选中需要美化的代码，右键Format Document
+GitLens  :  增强Visual Studio代码中内置的Git功能-通过Git责怪注释和代码镜头一目了然地可视化代码作者，无缝导航和浏览Git存储库，通过强大的比较命令获得有价值的见解，等等
+JavaScript (ES6) code snippets : ES6语法中JavaScript的代码段
+Path Autocomplete : 提供visual studio代码的路径完成。
+Path Intellisense : 自动完成文件名的Visual Studio代码插件
+Import Cost :  在编辑器中显示导入/要求包大小
+TSLint : 对Visual Studio代码的TSLint支持
+Bracket Pair Colorizer 2 : 此扩展名允许用颜色标识匹配的括号，用户可以定义要匹配的符号，以及要使用的颜色。
+Color Highlight :  此扩展程序设置在文档中找到的 css / web 颜色的样式。
+CSS Peek:
+	Peek：内联加载 css 文件并在那里进行快速编辑。（Ctrl + Shift + F12）
+	Go to：直接跳转到 CSS 文件或在新的编辑器（F12）中打开
+	Hover：在符号上悬停显示定义（Ctrl + hover）
+DotENV  :   在 .env 文件中高亮显示键值对。
+Image preview :  悬停时显示图像预览。
+Indent Rainbow : 此扩展使文本前面的缩进着色，在每个步骤上交替使用四种不同的颜色。
+REST Client  :  REST Client 允许您发送 HTTP 请求并直接在 Visual Studio Code 中查看响应
+Settings Sync  :  使用 GitHub Gist 在多台机器上同步设置，代码片段，主题，文件图标，启动，键绑定，工作区和扩展。
+TODO Highlight  :  在代码中突出显示 TODO，FIXME 和其他注释
+Version Lens  :   显示 package.json 文件中每个软件包的最新版本。
+NPM Intellisense，NPM 依赖补全，在你引入任何 node_modules 里面的依赖包时提供智能提示和自动完成；
+IntelliSense for CSS class names，CSS 类名补全，会自动扫描整个项目里面的 CSS 类名并在你输入类名时做智能提示；(启动时扫描占用资源,电脑风扇狂转,一会儿就好了)
+Code Outline :  能在单独窗口中列出当源代码中的各种符号，比如变量名、类名、方法名等，并支持快速跳转，有点类似于 Vim 里面的 ctags，翻看老代码、开源项目代码时非常有用。
+Document This : 能够一键给代码中的类、函数加上注释，支持函数声明、函数表达式、箭头函数等；
+Code Spell Checker  : 强烈推荐，对大部分非英语母语又不想写出四不像变量名的程序员来说，正确识记拼写各种单词还是有不小的挑战，比模棱两可时需要去查在线词典不同的是，这款插件能实时的识别单词拼写是否有误，并给出提示，不少 bug 都是因为拼写错误导致的。
+
+
+
+
+
+Vetur : VS代码的Vue工具
+VueHelper: vue代码提示插件
+
+vscode wxml : 微信wxml支持/vscode片段
+wxml : 微信小程序wxml格式化以及高亮组件(高度自定义)
+
+React-Native/React/Redux snippets for es6/es7 : 在JS/TS中使用ES7语法对React、Redux和Graphql进行简单扩展
+
+
+
+
+
+主题
+Dainty :很不错的一款主题,提供亮色和暗色调
+2077 Theme ：对比度比较高的暗调主题，用着感觉挺好
+Universe ：一款比较柔和的暗色调主题，很喜欢。
+Umi ：很柔和的一款主题
+Min Theme ：很不错的双色调主题风格
+Snazzy Plus ：很不错的一款暗色调主题，内置几个风格
+Hypersubatomic ：高对比的主题风格，很漂亮
+VSCode Great Icons ： 一款很精美的文件图标主题
+vscode-icons   :   Visual Studio代码的图标
+Material Icon Theme - VS Code 最受欢迎的图标主题之一。
+Material Theme Icons - 目前正在使用。
+
+
+
+
+我在日常生活中使用了一些重要的键盘快捷键，这些快捷方式使 Visual Studio Code 提高了我的工作效率。
+
+Ctrl + P ：转到文件，您可以在 Visual Studio Code 中移动到打开的文件/文件夹的任何文件。
+Ctrl + ` ：在 VS Code 中打开 terminal
+Alt + Down：下移一行
+Alt + Up：上移一行
+Ctrl + D：将选定的字符移动到下一个匹配字符串上
+Ctrl + Space：触发建议
+Shift + Alt + Down：向下复制行
+Shift + Alt + Up：向上复制行
+Ctrl + Shift + T：重新打开最新关闭的窗口
+
+
+
+
+
+
+ESLint
+将ESLint JavaScript集成到VS代码中。
+以下设置为包括ESLint在内的所有提供程序都启用了自动修复：
+"editor.codeActionsOnSave": {
+    "source.fixAll": true
+}
+复制代码相反，此配置仅在ESLint上将其打开：
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+}
+复制代码您还可以通过以下方式有选择地禁用ESLint：
+"editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": false
+}
+
+作者：发声的沉默者
+链接：https://juejin.im/post/5e665fb2f265da574e22a7c8
+来源：掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+

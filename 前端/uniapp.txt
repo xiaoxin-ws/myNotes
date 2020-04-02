@@ -1,0 +1,7 @@
+报错：
+
+npm WARN lifecycle The node binary used for scripts is /tmp/yarn--1585708480
+
+控制台运行，只需要这一行代码：
+
+npm config set scripts-prepend-node-path true

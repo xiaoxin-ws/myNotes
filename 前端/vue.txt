@@ -30,3 +30,7 @@ Vue CLI 3 和旧版使用了相同的 vue 命令，所以 Vue CLI 2 (vue-cli) �
 npm install -g @vue/cli-init
 //安装完后 就还可以使用 vue init 命令
 vue init webpack my_project
+
+
+vue.config.js详细配置
+https://www.cnblogs.com/zjhr/p/9472648.html

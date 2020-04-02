@@ -1,0 +1,42 @@
+原文:https://blog.csdn.net/weixin_41296616/article/details/81165725
+
+element-ui 表格数据时间格式化
+原创小马哥的天涯 最后发布于2018-07-23 12:33:41 阅读数 10928  收藏
+展开
+后台返回时间格式  /1470220594000/
+
+在element-ui  table 如何格式化呢  
+
+1.首先
+
+<el-table-column prop="AuditEndTime" label="处理时间" width="120" :formatter="dateFormat" align="center"></el-table-column>
+
+主要是:formatter="dateFormat" 这个属性  
+
+formatter	用来格式化内容	Function(row, column, cellValue, index)	—	—
+ 
+
+然后在   methods 方法对象里  添加 如下方法
+
+//时间格式化
+           dateFormat(row, column, cellValue, index){
+                   const daterc = row[column.property]
+                   if(daterc!=null){
+                       const dateMat= new Date(parseInt(daterc.replace("/Date(", "").replace(")/", ""), 10));
+                      const year = dateMat.getFullYear();
+                    const month = dateMat.getMonth() + 1;
+                    const day = dateMat.getDate();
+                    const hh = dateMat.getHours();
+                    const mm = dateMat.getMinutes();
+                    const ss = dateMat.getSeconds();
+                    const timeFormat= year + "/" + month + "/" + day + " " + hh + ":" + mm + ":" + ss;
+                    return timeFormat;
+                   }
+                   
+            }
+
+格式化后：
+
+2018/2/27 8:59:19
+
+就 行了      是不是 很简单......
