@@ -1,0 +1,7 @@
+doack:   sudo apt install plank
+
+切换效果: sudo apt install systemsettings
+
+
+图标: https://pling.com/browse/cat/386
+下载复制到 /usr/share/icons
